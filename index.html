@@ -241,6 +241,7 @@
             justify-content: space-between;
             align-items: flex-start;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .task-title span {
@@ -290,6 +291,30 @@
         .badge-repeat {
             background: #e0e7ff;
             color: #3730a3;
+        }
+
+        /* Badge responsável */
+        .badge-responsavel {
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.1rem 0.6rem;
+            border-radius: 40px;
+            display: inline-block;
+        }
+
+        .badge-responsavel.ambos {
+            background: #fae8ff;
+            color: #7c3aed;
+        }
+
+        .badge-responsavel.cecilia {
+            background: #fce7f3;
+            color: #be185d;
+        }
+
+        .badge-responsavel.beatriz {
+            background: #dbeafe;
+            color: #1e40af;
         }
 
         .task-actions {
@@ -558,6 +583,17 @@
                     </div>
                 </div>
 
+                <div class="row-2">
+                    <div>
+                        <label><i class="fas fa-user"></i> Responsável</label>
+                        <select id="taskResponsavel">
+                            <option value="ambos">Ambos</option>
+                            <option value="cecilia">Cecília</option>
+                            <option value="beatriz">Beatriz</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" id="closeModalBtn">Cancelar</button>
                     <button type="submit" class="btn btn-primary" id="saveTaskBtn"><i class="fas fa-save"></i> Salvar</button>
@@ -612,17 +648,17 @@
         // ----- DADOS INICIAIS (exemplo) -----
         function getDefaultTasks() {
             return [
-                { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não' },
-                { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não' },
-                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-08', priority: 'baixa', status: 'concluído', repeat: 'não' },
-                { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
-                { id: 5, title: 'Perguntar p/ Guilherme se a NF da Reiller foi enviada', description: '', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
-                { id: 6, title: 'Verificar com Guilherme o pagamento feito para ALUMNI 05/06', description: '(2103-1)', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
-                { id: 7, title: 'Entregar os processos consultados p/ Guilherme', description: '', date: '2026-07-09', priority: 'media', status: 'pendente', repeat: 'não' },
-                { id: 8, title: 'Verificar se as notas antigas estão lançadas', description: 'tirar dúvida com Livia. Já estão separados', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não' },
-                { id: 9, title: 'Quando TUDO for conciliado, fazer as guias de reembolso', description: 'das receitas do periodo', date: '2026-07-10', priority: 'alta', status: 'pendente', repeat: 'não' },
-                { id: 10, title: 'Falta lançar algumas NFS', description: '', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não' },
-                { id: 11, title: 'Fazer reembolso p/ Fellipe', description: '', date: '2026-07-10', priority: 'baixa', status: 'pendente', repeat: 'não' },
+                { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não', responsavel: 'ambos' },
+                { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não', responsavel: 'cecilia' },
+                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-08', priority: 'baixa', status: 'concluído', repeat: 'não', responsavel: 'beatriz' },
+                { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
+                { id: 5, title: 'Perguntar p/ Guilherme se a NF da Reiller foi enviada', description: '', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
+                { id: 6, title: 'Verificar com Guilherme o pagamento feito para ALUMNI 05/06', description: '(2103-1)', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
+                { id: 7, title: 'Entregar os processos consultados p/ Guilherme', description: '', date: '2026-07-09', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
+                { id: 8, title: 'Verificar se as notas antigas estão lançadas', description: 'tirar dúvida com Livia. Já estão separados', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
+                { id: 9, title: 'Quando TUDO for conciliado, fazer as guias de reembolso', description: 'das receitas do periodo', date: '2026-07-10', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
+                { id: 10, title: 'Falta lançar algumas NFS', description: '', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
+                { id: 11, title: 'Fazer reembolso p/ Fellipe', description: '', date: '2026-07-10', priority: 'baixa', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
             ];
         }
 
@@ -653,6 +689,7 @@
         const taskPriority = document.getElementById('taskPriority');
         const taskStatus = document.getElementById('taskStatus');
         const taskRepeat = document.getElementById('taskRepeat');
+        const taskResponsavel = document.getElementById('taskResponsavel');
         const editId = document.getElementById('editId');
         const modalTitle = document.getElementById('modalTitle');
         const newTaskBtn = document.getElementById('newTaskBtn');
@@ -698,6 +735,19 @@
             return repeat.charAt(0).toUpperCase() + repeat.slice(1);
         }
 
+        function getResponsavelLabel(responsavel) {
+            const map = {
+                'ambos': 'Ambos',
+                'cecilia': 'Cecília',
+                'beatriz': 'Beatriz'
+            };
+            return map[responsavel] || responsavel;
+        }
+
+        function getResponsavelClass(responsavel) {
+            return `badge-responsavel ${responsavel}`;
+        }
+
         function showToast(message) {
             toastMessage.textContent = message;
             toast.classList.add('show');
@@ -705,6 +755,33 @@
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
             }, 2500);
+        }
+
+        // ----- RESETAR TAREFAS CONCLUÍDAS DIARIAMENTE -----
+        function resetDailyTasks() {
+            const hojeStr = getTodayStr();
+            const ultimaExecucao = localStorage.getItem('ultima_execucao_reset');
+            
+            // Se nunca executou ou se a data mudou
+            if (!ultimaExecucao || ultimaExecucao !== hojeStr) {
+                // Pega todas as tarefas concluídas
+                const concluidas = tasks.filter(t => t.status === 'concluído');
+                
+                // Muda para pendente (mantém a data original)
+                concluidas.forEach(t => {
+                    t.status = 'pendente';
+                });
+                
+                // Salva e atualiza
+                if (concluidas.length > 0) {
+                    saveTasks(tasks);
+                    localStorage.setItem('ultima_execucao_reset', hojeStr);
+                    render();
+                    showToast(`🔄 ${concluidas.length} tarefa(s) concluída(s) voltaram para pendente`);
+                } else {
+                    localStorage.setItem('ultima_execucao_reset', hojeStr);
+                }
+            }
         }
 
         // ----- GERAR RELATÓRIO -----
@@ -738,6 +815,9 @@
                     if (t.description) {
                         linha += ` ${t.description}`;
                     }
+                    if (t.responsavel && t.responsavel !== 'ambos') {
+                        linha += ` (${getResponsavelLabel(t.responsavel)})`;
+                    }
                     relatorio += linha + '\n';
                 });
             } else {
@@ -751,6 +831,9 @@
                     let linha = `º ${t.title}`;
                     if (t.description) {
                         linha += ` (${t.description})`;
+                    }
+                    if (t.responsavel && t.responsavel !== 'ambos') {
+                        linha += ` - ${getResponsavelLabel(t.responsavel)}`;
                     }
                     relatorio += linha + '\n';
                 });
@@ -812,11 +895,16 @@
                 } else {
                     tasksList.forEach(task => {
                         const repeatLabel = getRepeatLabel(task.repeat);
+                        const responsavelLabel = getResponsavelLabel(task.responsavel || 'ambos');
+                        const responsavelClass = getResponsavelClass(task.responsavel || 'ambos');
                         html += `
                             <div class="task-card" data-id="${task.id}">
                                 <div class="task-title">
                                     <span>${task.title}</span>
-                                    <span class="badge ${getPriorityBadge(task.priority)}">${task.priority}</span>
+                                    <div style="display:flex; gap:0.3rem; flex-wrap:wrap;">
+                                        <span class="badge ${getPriorityBadge(task.priority)}">${task.priority}</span>
+                                        <span class="${responsavelClass}">${responsavelLabel}</span>
+                                    </div>
                                 </div>
                                 ${task.description ? `<div style="font-size:0.8rem;color:#475569;margin-top:4px;">${task.description}</div>` : ''}
                                 <div class="task-meta">
@@ -917,6 +1005,7 @@
                 taskPriority.value = taskData.priority || 'media';
                 taskStatus.value = taskData.status || 'pendente';
                 taskRepeat.value = taskData.repeat || 'não';
+                taskResponsavel.value = taskData.responsavel || 'ambos';
                 editId.value = taskData.id || '';
             } else {
                 modalTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Nova tarefa';
@@ -926,6 +1015,7 @@
                 taskPriority.value = 'media';
                 taskStatus.value = 'pendente';
                 taskRepeat.value = 'não';
+                taskResponsavel.value = 'ambos';
                 editId.value = '';
             }
             modalOverlay.classList.add('open');
@@ -966,6 +1056,7 @@
                 priority: taskPriority.value,
                 status: taskStatus.value,
                 repeat: taskRepeat.value,
+                responsavel: taskResponsavel.value,
             };
 
             if (id) {
@@ -1018,9 +1109,14 @@
         resetBtn.addEventListener('click', resetToExample);
         clearBtn.addEventListener('click', clearAllTasks);
 
-        // ----- RENDERIZAR INICIAL -----
+        // ----- INICIALIZAR -----
+        // Executar reset diário ao carregar
+        resetDailyTasks();
+        
+        // Renderizar
         render();
 
+        // Mostrar mensagem de boas-vindas
         setTimeout(() => {
             const count = tasks.length;
             showToast(`📋 ${count} tarefa${count !== 1 ? 's' : ''} carregada${count !== 1 ? 's' : ''}`);
