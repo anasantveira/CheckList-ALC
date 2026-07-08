@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist · Trabalho</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #0a2a44;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header h1 i {
+            color: #2a7de1;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-primary {
+            background: #1a5fb4;
+            border: 1px solid #1a5fb4;
+            color: white;
+            box-shadow: 0 4px 8px rgba(26, 95, 180, 0.2);
+        }
+
+        .btn-primary i {
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0f4a8f;
+            transform: scale(1.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            border: 1px solid #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            background: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 60px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #e9edf2;
+            align-items: center;
+        }
+
+        .filter-bar span {
+            font-weight: 500;
+            color: #475569;
+            margin-right: 0.25rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: none;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .filter-btn.active {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .filter-btn:hover {
+            background: #e9edf2;
+        }
+
+        .filter-btn i {
+            margin-right: 6px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .column {
+            background: white;
+            border-radius: 24px;
+            padding: 1.2rem 1rem 1.5rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            border: 1px solid #eef2f6;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding: 0 0.25rem;
+        }
+
+        .column-header h3 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .column-header .count {
+            background: #eef2f6;
+            padding: 0.1rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex: 1;
+        }
+
+        .task-card {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 1rem 1rem 0.9rem;
+            border: 1px solid #eef2f6;
+            transition: 0.15s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .task-card:hover {
+            border-color: #cbd5e1;
+            background: white;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: #0f172a;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .task-title span {
+            word-break: break-word;
+        }
+
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem 0.8rem;
+            margin-top: 0.6rem;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+
+        .task-meta i {
+            margin-right: 4px;
+            width: 14px;
+            color: #64748b;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.6rem;
+            border-radius: 40px;
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-priority-alta {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-priority-media {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .badge-priority-baixa {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-repeat {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .task-actions {
+            margin-top: 0.8rem;
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            border-top: 1px solid #edf2f6;
+            padding-top: 0.7rem;
+        }
+
+        .task-actions .btn-sm {
+            background: transparent;
+            border: none;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #334155;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .task-actions .btn-sm:hover {
+            background: #e9edf2;
+        }
+
+        .task-actions .btn-sm i {
+            font-size: 0.7rem;
+        }
+
+        .btn-sm-success { color: #0b6e4f; }
+        .btn-sm-danger { color: #a12b2b; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(3px);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 1rem;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 32px;
+            max-width: 500px;
+            width: 100%;
+            padding: 2rem 1.8rem 1.8rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeUp 0.25s ease;
+        }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .modal label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #1e293b;
+            display: block;
+            margin-top: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .modal input, .modal select, .modal textarea {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border: 1px solid #d1d9e6;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.15s;
+        }
+
+        .modal input:focus, .modal select:focus, .modal textarea:focus {
+            outline: 2px solid #2a7de1;
+            border-color: transparent;
+        }
+
+        .modal textarea {
+            border-radius: 20px;
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .modal .row-2 {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .modal .row-2 > * {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background: #eef2f6;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #94a3b8;
+            padding: 1.5rem 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .empty-state i {
+            font-size: 2rem;
+            opacity: 0.5;
+            margin-bottom: 0.3rem;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #0f172a;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            display: none;
+            align-items: center;
+            gap: 0.8rem;
+            z-index: 1000;
+            animation: fadeUp 0.3s ease;
+        }
+
+        .toast.show {
+            display: flex;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 { font-size: 1.6rem; }
+            .filter-bar { border-radius: 30px; padding: 0.5rem 1rem; }
+            .modal { padding: 1.5rem; }
+            .toast { bottom: 1rem; right: 1rem; left: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app">
+
+    <div class="header">
+        <h1><i class="fas fa-clipboard-list"></i>Checklist</h1>
+        <div class="header-actions">
+            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i>Restaurar exemplo</button>
+            <button class="btn btn-danger" id="clearBtn"><i class="fas fa-trash-alt"></i>Limpar tudo</button>
+            <button class="btn btn-primary" id="newTaskBtn"><i class="fas fa-plus-circle"></i>Nova tarefa</button>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="filterBar">
+        <span><i class="fas fa-filter"></i> Filtro:</span>
+        <button class="filter-btn active" data-filter="all"><i class="fas fa-th-list"></i>Todas</button>
+        <button class="filter-btn" data-filter="pendente"><i class="fas fa-clock"></i>Pendente</button>
+        <button class="filter-btn" data-filter="em progresso"><i class="fas fa-spinner"></i>Em progresso</button>
+        <button class="filter-btn" data-filter="concluído"><i class="fas fa-check-circle"></i>Concluído</button>
+    </div>
+
+    <div class="board" id="board"></div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle"><i class="fas fa-pen"></i> Nova tarefa</h2>
+            <form id="taskForm">
+                <label>Título *</label>
+                <input type="text" id="taskTitle" placeholder="Ex: Revisar relatório" required>
+
+                <label>Descrição (opcional)</label>
+                <textarea id="taskDesc" placeholder="Detalhes..."></textarea>
+
+                <div class="row-2">
+                    <div>
+                        <label>Data</label>
+                        <input type="date" id="taskDate">
+                    </div>
+                    <div>
+                        <label>Prioridade</label>
+                        <select id="taskPriority">
+                            <option value="baixa">Baixa</option>
+                            <option value="media" selected>Média</option>
+                            <option value="alta">Alta</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row-2">
+                    <div>
+                        <label>Status</label>
+                        <select id="taskStatus">
+                            <option value="pendente">Pendente</option>
+                            <option value="em progresso">Em progresso</option>
+                            <option value="concluído">Concluído</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label><i class="fas fa-sync-alt"></i> Repetir</label>
+                        <select id="taskRepeat">
+                            <option value="não">Não</option>
+                            <option value="diariamente">Diariamente</option>
+                            <option value="semanalmente">Semanalmente</option>
+                            <option value="mensalmente">Mensalmente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="closeModalBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="saveTaskBtn"><i class="fas fa-save"></i> Salvar</button>
+                </div>
+                <input type="hidden" id="editId" value="">
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" style="color: #4ade80;"></i>
+        <span id="toastMessage">Tarefa salva!</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- CHAVE DO localStorage -----
+        const STORAGE_KEY = 'checklist_tarefas';
+
+        // ----- CARREGAR TAREFAS DO localStorage -----
+        function loadTasks() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try {
+                    return JSON.parse(stored);
+                } catch (e) {
+                    return [];
+                }
+            }
+            return null; // null = sem dados salvos
+        }
+
+        // ----- SALVAR TAREFAS NO localStorage -----
+        function saveTasks(tasks) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+        }
+
+        // ----- DADOS INICIAIS (exemplo) -----
+        function getDefaultTasks() {
+            return [
+                { id: 1, title: 'Revisar apresentação', description: 'Slides para reunião', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não' },
+                { id: 2, title: 'Enviar relatório financeiro', description: 'Planilha consolidada', date: '2026-07-10', priority: 'media', status: 'em progresso', repeat: 'não' },
+                { id: 3, title: 'Backup semanal', description: 'Arquivos do servidor', date: '2026-07-12', priority: 'baixa', status: 'concluído', repeat: 'semanalmente' },
+                { id: 4, title: 'Atualizar sistema', description: 'Versão 2.4.1', date: '2026-07-20', priority: 'alta', status: 'pendente', repeat: 'mensalmente' },
+                { id: 5, title: 'Reunião equipe', description: 'Pauta: metas Q3', date: '2026-07-08', priority: 'media', status: 'em progresso', repeat: 'não' },
+                { id: 6, title: 'Limpeza de e-mails', description: 'Caixa de entrada', date: null, priority: 'baixa', status: 'pendente', repeat: 'diariamente' },
+            ];
+        }
+
+        // ----- INICIALIZAR TAREFAS -----
+        let tasks = [];
+        let nextId = 1;
+        let filter = 'all';
+
+        // Carregar do localStorage ou usar exemplo
+        const saved = loadTasks();
+        if (saved && saved.length > 0) {
+            tasks = saved;
+            // Encontrar o maior ID para continuar a sequência
+            const maxId = tasks.reduce((max, t) => Math.max(max, t.id || 0), 0);
+            nextId = maxId + 1;
+        } else {
+            tasks = getDefaultTasks();
+            nextId = 7; // pois os exemplos vão até 6
+            saveTasks(tasks); // salvar pela primeira vez
+        }
+
+        // ----- REFERÊNCIAS DOM -----
+        const board = document.getElementById('board');
+        const filterBar = document.getElementById('filterBar');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const taskForm = document.getElementById('taskForm');
+        const taskTitle = document.getElementById('taskTitle');
+        const taskDesc = document.getElementById('taskDesc');
+        const taskDate = document.getElementById('taskDate');
+        const taskPriority = document.getElementById('taskPriority');
+        const taskStatus = document.getElementById('taskStatus');
+        const taskRepeat = document.getElementById('taskRepeat');
+        const editId = document.getElementById('editId');
+        const modalTitle = document.getElementById('modalTitle');
+        const newTaskBtn = document.getElementById('newTaskBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        let toastTimeout = null;
+
+        // ----- FUNÇÕES AUXILIARES -----
+        function formatDate(dateStr) {
+            if (!dateStr) return 'Sem data';
+            const d = new Date(dateStr + 'T00:00:00');
+            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        function getPriorityBadge(priority) {
+            const map = {
+                'alta': 'badge-priority-alta',
+                'media': 'badge-priority-media',
+                'baixa': 'badge-priority-baixa'
+            };
+            return map[priority] || 'badge-priority-media';
+        }
+
+        function getRepeatLabel(repeat) {
+            if (repeat === 'não' || !repeat) return '';
+            return repeat.charAt(0).toUpperCase() + repeat.slice(1);
+        }
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // ----- RENDERIZAR BOARD -----
+        function render() {
+            let filtered = tasks;
+            if (filter !== 'all') {
+                filtered = tasks.filter(t => t.status === filter);
+            }
+
+            const priorityWeight = { 'alta': 3, 'media': 2, 'baixa': 1 };
+            filtered.sort((a, b) => {
+                if (a.date && b.date) {
+                    if (a.date !== b.date) return new Date(a.date) - new Date(b.date);
+                } else if (a.date) return -1;
+                else if (b.date) return 1;
+                return (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0);
+            });
+
+            const groups = { 'pendente': [], 'em progresso': [], 'concluído': [] };
+            filtered.forEach(t => {
+                if (groups[t.status]) groups[t.status].push(t);
+                else groups[t.status] = [t];
+            });
+
+            let html = '';
+            const statusLabels = {
+                'pendente': { icon: 'fa-clock', label: 'Pendente', color: '#eab308' },
+                'em progresso': { icon: 'fa-spinner', label: 'Em progresso', color: '#3b82f6' },
+                'concluído': { icon: 'fa-check-circle', label: 'Concluído', color: '#22c55e' }
+            };
+
+            for (const [statusKey, tasksList] of Object.entries(groups)) {
+                const info = statusLabels[statusKey] || { icon: 'fa-circle', label: statusKey };
+                const count = tasksList.length;
+                html += `<div class="column" data-status="${statusKey}">
+                    <div class="column-header">
+                        <h3><i class="fas ${info.icon}" style="color:${info.color}"></i> ${info.label}</h3>
+                        <span class="count">${count}</span>
+                    </div>
+                    <div class="task-list">`;
+
+                if (count === 0) {
+                    html += `<div class="empty-state"><i class="fas fa-inbox"></i><br>Nenhuma tarefa</div>`;
+                } else {
+                    tasksList.forEach(task => {
+                        const repeatLabel = getRepeatLabel(task.repeat);
+                        html += `
+                            <div class="task-card" data-id="${task.id}">
+                                <div class="task-title">
+                                    <span>${task.title}</span>
+                                    <span class="badge ${getPriorityBadge(task.priority)}">${task.priority}</span>
+                                </div>
+                                ${task.description ? `<div style="font-size:0.8rem;color:#475569;margin-top:4px;">${task.description}</div>` : ''}
+                                <div class="task-meta">
+                                    <span><i class="far fa-calendar-alt"></i> ${formatDate(task.date)}</span>
+                                    ${repeatLabel ? `<span><i class="fas fa-sync-alt"></i> ${repeatLabel}</span>` : ''}
+                                </div>
+                                <div class="task-actions">
+                                    <button class="btn-sm btn-sm-success" data-action="progress" data-id="${task.id}"><i class="fas fa-arrow-right"></i> Progresso</button>
+                                    <button class="btn-sm btn-sm-success" data-action="done" data-id="${task.id}"><i class="fas fa-check"></i> Concluir</button>
+                                    <button class="btn-sm" data-action="edit" data-id="${task.id}"><i class="fas fa-pen"></i> Editar</button>
+                                    <button class="btn-sm btn-sm-danger" data-action="delete" data-id="${task.id}"><i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                html += `</div></div>`;
+            }
+
+            board.innerHTML = html;
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === filter) btn.classList.add('active');
+            });
+        }
+
+        // ----- CRUD COM SALVAMENTO AUTOMÁTICO -----
+        function addTask(task) {
+            task.id = nextId++;
+            tasks.push(task);
+            saveTasks(tasks);
+            render();
+            showToast('✅ Tarefa criada!');
+        }
+
+        function updateTask(id, updated) {
+            const index = tasks.findIndex(t => t.id === id);
+            if (index !== -1) {
+                tasks[index] = { ...tasks[index], ...updated };
+                saveTasks(tasks);
+                render();
+                showToast('✅ Tarefa atualizada!');
+            }
+        }
+
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks(tasks);
+            render();
+            showToast('🗑️ Tarefa removida');
+        }
+
+        function changeStatus(id, newStatus) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.status = newStatus;
+                saveTasks(tasks);
+                render();
+                showToast(`📌 Status alterado para: ${newStatus}`);
+            }
+        }
+
+        function clearAllTasks() {
+            if (tasks.length === 0) {
+                showToast('ℹ️ Já está vazio');
+                return;
+            }
+            if (confirm('⚠️ Tem certeza que deseja excluir TODAS as tarefas?')) {
+                tasks = [];
+                saveTasks(tasks);
+                render();
+                showToast('🧹 Todas as tarefas foram removidas');
+            }
+        }
+
+        function resetToExample() {
+            if (tasks.length > 0) {
+                if (!confirm('⚠️ Isso substituirá todas as tarefas atuais pelos exemplos. Continuar?')) {
+                    return;
+                }
+            }
+            tasks = getDefaultTasks();
+            nextId = 7;
+            saveTasks(tasks);
+            render();
+            showToast('📋 Exemplos restaurados!');
+        }
+
+        // ----- MODAL -----
+        function openModal(taskData = null) {
+            if (taskData) {
+                modalTitle.innerHTML = '<i class="fas fa-edit"></i> Editar tarefa';
+                taskTitle.value = taskData.title || '';
+                taskDesc.value = taskData.description || '';
+                taskDate.value = taskData.date || '';
+                taskPriority.value = taskData.priority || 'media';
+                taskStatus.value = taskData.status || 'pendente';
+                taskRepeat.value = taskData.repeat || 'não';
+                editId.value = taskData.id || '';
+            } else {
+                modalTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Nova tarefa';
+                taskTitle.value = '';
+                taskDesc.value = '';
+                taskDate.value = '';
+                taskPriority.value = 'media';
+                taskStatus.value = 'pendente';
+                taskRepeat.value = 'não';
+                editId.value = '';
+            }
+            modalOverlay.classList.add('open');
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+        }
+
+        // ----- EVENTOS -----
+        filterBar.addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+            filter = btn.dataset.filter;
+            render();
+        });
+
+        newTaskBtn.addEventListener('click', () => openModal());
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        taskForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = taskTitle.value.trim();
+            if (!title) {
+                showToast('⚠️ O título é obrigatório');
+                return;
+            }
+
+            const id = editId.value ? parseInt(editId.value) : null;
+            const taskData = {
+                title,
+                description: taskDesc.value.trim(),
+                date: taskDate.value || null,
+                priority: taskPriority.value,
+                status: taskStatus.value,
+                repeat: taskRepeat.value,
+            };
+
+            if (id) {
+                updateTask(id, taskData);
+            } else {
+                addTask(taskData);
+            }
+            closeModal();
+        });
+
+        board.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            const id = parseInt(btn.dataset.id);
+            if (isNaN(id)) return;
+
+            if (action === 'delete') {
+                if (confirm('Remover esta tarefa?')) deleteTask(id);
+            } else if (action === 'edit') {
+                const task = tasks.find(t => t.id === id);
+                if (task) openModal({ ...task });
+            } else if (action === 'progress') {
+                const task = tasks.find(t => t.id === id);
+                if (task) {
+                    if (task.status === 'pendente') changeStatus(id, 'em progresso');
+                    else if (task.status === 'em progresso') changeStatus(id, 'concluído');
+                    else changeStatus(id, 'pendente');
+                }
+            } else if (action === 'done') {
+                changeStatus(id, 'concluído');
+            }
+        });
+
+        resetBtn.addEventListener('click', resetToExample);
+        clearBtn.addEventListener('click', clearAllTasks);
+
+        // ----- RENDERIZAR INICIAL -----
+        render();
+
+        // Mostrar mensagem de boas-vindas
+        setTimeout(() => {
+            const count = tasks.length;
+            showToast(`📋 ${count} tarefa${count !== 1 ? 's' : ''} carregada${count !== 1 ? 's' : ''}`);
+        }, 500);
+
+    })();
+</script>
+</body>
+</html>
