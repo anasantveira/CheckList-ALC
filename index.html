@@ -106,6 +106,26 @@
             background: #b91c1c;
         }
 
+        .btn-success {
+            background: #16a34a;
+            border: 1px solid #16a34a;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        .btn-purple {
+            background: #7c3aed;
+            border: 1px solid #7c3aed;
+            color: white;
+        }
+
+        .btn-purple:hover {
+            background: #6d28d9;
+        }
+
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
@@ -439,11 +459,33 @@
             display: flex;
         }
 
+        /* Modal do relatório */
+        .modal-report .modal {
+            max-width: 700px;
+        }
+
+        .modal-report textarea {
+            min-height: 400px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
         @media (max-width: 640px) {
             .header h1 { font-size: 1.6rem; }
             .filter-bar { border-radius: 30px; padding: 0.5rem 1rem; }
             .modal { padding: 1.5rem; }
             .toast { bottom: 1rem; right: 1rem; left: 1rem; }
+            .modal-report textarea { min-height: 300px; }
         }
     </style>
 </head>
@@ -453,9 +495,10 @@
     <div class="header">
         <h1><i class="fas fa-clipboard-list"></i>Checklist</h1>
         <div class="header-actions">
-            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i>Restaurar exemplo</button>
-            <button class="btn btn-danger" id="clearBtn"><i class="fas fa-trash-alt"></i>Limpar tudo</button>
-            <button class="btn btn-primary" id="newTaskBtn"><i class="fas fa-plus-circle"></i>Nova tarefa</button>
+            <button class="btn btn-purple" id="reportBtn"><i class="fas fa-file-alt"></i>Relatório do dia</button>
+            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i>Restaurar</button>
+            <button class="btn btn-danger" id="clearBtn"><i class="fas fa-trash-alt"></i>Limpar</button>
+            <button class="btn btn-primary" id="newTaskBtn"><i class="fas fa-plus-circle"></i>Nova</button>
         </div>
     </div>
 
@@ -469,6 +512,7 @@
 
     <div class="board" id="board"></div>
 
+    <!-- Modal Nova/Editar Tarefa -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <h2 id="modalTitle"><i class="fas fa-pen"></i> Nova tarefa</h2>
@@ -523,6 +567,19 @@
         </div>
     </div>
 
+    <!-- Modal Relatório -->
+    <div class="modal-overlay modal-report" id="reportModal">
+        <div class="modal">
+            <h2><i class="fas fa-file-alt"></i> Relatório do Dia</h2>
+            <label>Copie o texto abaixo para usar no seu relatório:</label>
+            <textarea id="reportText" readonly></textarea>
+            <div class="report-actions">
+                <button class="btn btn-secondary" id="closeReportBtn">Fechar</button>
+                <button class="btn btn-primary" id="copyReportBtn"><i class="fas fa-copy"></i> Copiar</button>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" style="color: #4ade80;"></i>
         <span id="toastMessage">Tarefa salva!</span>
@@ -544,7 +601,7 @@
                     return [];
                 }
             }
-            return null; // null = sem dados salvos
+            return null;
         }
 
         // ----- SALVAR TAREFAS NO localStorage -----
@@ -555,12 +612,17 @@
         // ----- DADOS INICIAIS (exemplo) -----
         function getDefaultTasks() {
             return [
-                { id: 1, title: 'Revisar apresentação', description: 'Slides para reunião', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não' },
-                { id: 2, title: 'Enviar relatório financeiro', description: 'Planilha consolidada', date: '2026-07-10', priority: 'media', status: 'em progresso', repeat: 'não' },
-                { id: 3, title: 'Backup semanal', description: 'Arquivos do servidor', date: '2026-07-12', priority: 'baixa', status: 'concluído', repeat: 'semanalmente' },
-                { id: 4, title: 'Atualizar sistema', description: 'Versão 2.4.1', date: '2026-07-20', priority: 'alta', status: 'pendente', repeat: 'mensalmente' },
-                { id: 5, title: 'Reunião equipe', description: 'Pauta: metas Q3', date: '2026-07-08', priority: 'media', status: 'em progresso', repeat: 'não' },
-                { id: 6, title: 'Limpeza de e-mails', description: 'Caixa de entrada', date: null, priority: 'baixa', status: 'pendente', repeat: 'diariamente' },
+                { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não' },
+                { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não' },
+                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-08', priority: 'baixa', status: 'concluído', repeat: 'não' },
+                { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
+                { id: 5, title: 'Perguntar p/ Guilherme se a NF da Reiller foi enviada', description: '', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
+                { id: 6, title: 'Verificar com Guilherme o pagamento feito para ALUMNI 05/06', description: '(2103-1)', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não' },
+                { id: 7, title: 'Entregar os processos consultados p/ Guilherme', description: '', date: '2026-07-09', priority: 'media', status: 'pendente', repeat: 'não' },
+                { id: 8, title: 'Verificar se as notas antigas estão lançadas', description: 'tirar dúvida com Livia. Já estão separados', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não' },
+                { id: 9, title: 'Quando TUDO for conciliado, fazer as guias de reembolso', description: 'das receitas do periodo', date: '2026-07-10', priority: 'alta', status: 'pendente', repeat: 'não' },
+                { id: 10, title: 'Falta lançar algumas NFS', description: '', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não' },
+                { id: 11, title: 'Fazer reembolso p/ Fellipe', description: '', date: '2026-07-10', priority: 'baixa', status: 'pendente', repeat: 'não' },
             ];
         }
 
@@ -569,17 +631,15 @@
         let nextId = 1;
         let filter = 'all';
 
-        // Carregar do localStorage ou usar exemplo
         const saved = loadTasks();
         if (saved && saved.length > 0) {
             tasks = saved;
-            // Encontrar o maior ID para continuar a sequência
             const maxId = tasks.reduce((max, t) => Math.max(max, t.id || 0), 0);
             nextId = maxId + 1;
         } else {
             tasks = getDefaultTasks();
-            nextId = 7; // pois os exemplos vão até 6
-            saveTasks(tasks); // salvar pela primeira vez
+            nextId = 12;
+            saveTasks(tasks);
         }
 
         // ----- REFERÊNCIAS DOM -----
@@ -599,6 +659,11 @@
         const closeModalBtn = document.getElementById('closeModalBtn');
         const resetBtn = document.getElementById('resetBtn');
         const clearBtn = document.getElementById('clearBtn');
+        const reportBtn = document.getElementById('reportBtn');
+        const reportModal = document.getElementById('reportModal');
+        const reportText = document.getElementById('reportText');
+        const closeReportBtn = document.getElementById('closeReportBtn');
+        const copyReportBtn = document.getElementById('copyReportBtn');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
 
@@ -608,7 +673,15 @@
         function formatDate(dateStr) {
             if (!dateStr) return 'Sem data';
             const d = new Date(dateStr + 'T00:00:00');
-            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function getTodayStr() {
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            return `${ano}-${mes}-${dia}`;
         }
 
         function getPriorityBadge(priority) {
@@ -632,6 +705,67 @@
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
             }, 2500);
+        }
+
+        // ----- GERAR RELATÓRIO -----
+        function generateReport() {
+            const hoje = new Date();
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const hojeStr = getTodayStr();
+
+            // Tarefas concluídas hoje
+            const concluidasHoje = tasks.filter(t => 
+                t.status === 'concluído' && t.date === hojeStr
+            );
+
+            // Tarefas pendentes (incluindo em progresso)
+            const pendentes = tasks.filter(t => 
+                t.status === 'pendente' || t.status === 'em progresso'
+            );
+
+            // Ordenar pendentes por prioridade (alta > media > baixa)
+            const priorityWeight = { 'alta': 3, 'media': 2, 'baixa': 1 };
+            pendentes.sort((a, b) => 
+                (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0)
+            );
+
+            let relatorio = `*${dataFormatada}*\n\n`;
+
+            // Seções de concluídas
+            if (concluidasHoje.length > 0) {
+                concluidasHoje.forEach(t => {
+                    let linha = `º ${t.title}`;
+                    if (t.description) {
+                        linha += ` ${t.description}`;
+                    }
+                    relatorio += linha + '\n';
+                });
+            } else {
+                relatorio += 'º Nenhuma tarefa concluída hoje.\n';
+            }
+
+            relatorio += '\n*PENDÊNCIAS:*\n\n';
+
+            if (pendentes.length > 0) {
+                pendentes.forEach(t => {
+                    let linha = `º ${t.title}`;
+                    if (t.description) {
+                        linha += ` (${t.description})`;
+                    }
+                    relatorio += linha + '\n';
+                });
+            } else {
+                relatorio += 'º Nenhuma pendência! 🎉\n';
+            }
+
+            return relatorio;
+        }
+
+        // ----- ABRIR RELATÓRIO -----
+        function openReport() {
+            const relatorio = generateReport();
+            reportText.value = relatorio;
+            reportModal.classList.add('open');
         }
 
         // ----- RENDERIZAR BOARD -----
@@ -767,13 +901,13 @@
                 }
             }
             tasks = getDefaultTasks();
-            nextId = 7;
+            nextId = 12;
             saveTasks(tasks);
             render();
             showToast('📋 Exemplos restaurados!');
         }
 
-        // ----- MODAL -----
+        // ----- MODAL TAREFA -----
         function openModal(taskData = null) {
             if (taskData) {
                 modalTitle.innerHTML = '<i class="fas fa-edit"></i> Editar tarefa';
@@ -866,13 +1000,27 @@
             }
         });
 
+        // ----- EVENTOS RELATÓRIO -----
+        reportBtn.addEventListener('click', openReport);
+        closeReportBtn.addEventListener('click', () => {
+            reportModal.classList.remove('open');
+        });
+        reportModal.addEventListener('click', (e) => {
+            if (e.target === reportModal) reportModal.classList.remove('open');
+        });
+
+        copyReportBtn.addEventListener('click', () => {
+            reportText.select();
+            document.execCommand('copy');
+            showToast('📋 Relatório copiado!');
+        });
+
         resetBtn.addEventListener('click', resetToExample);
         clearBtn.addEventListener('click', clearAllTasks);
 
         // ----- RENDERIZAR INICIAL -----
         render();
 
-        // Mostrar mensagem de boas-vindas
         setTimeout(() => {
             const count = tasks.length;
             showToast(`📋 ${count} tarefa${count !== 1 ? 's' : ''} carregada${count !== 1 ? 's' : ''}`);
