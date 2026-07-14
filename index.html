@@ -10,115 +10,91 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background: #f4f7fc;
+            background: #f0f2f5;
             display: flex;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 1.5rem;
             min-height: 100vh;
         }
 
         .app {
-            max-width: 1200px;
+            max-width: 1300px;
             width: 100%;
         }
 
+        /* ===== HEADER ===== */
         .header {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             gap: 1rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .header h1 {
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
             color: #0a2a44;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .header h1 i {
             color: #2a7de1;
+            font-size: 1.8rem;
         }
 
         .header-actions {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.6rem;
             flex-wrap: wrap;
         }
 
+        /* ===== BOTÕES ===== */
         .btn {
             background: white;
             border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 60px;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
             color: #1e293b;
             border: 1px solid #e2e8f0;
         }
 
-        .btn-primary {
-            background: #1a5fb4;
-            border: 1px solid #1a5fb4;
-            color: white;
-            box-shadow: 0 4px 8px rgba(26, 95, 180, 0.2);
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .btn-primary i {
+        .btn-primary {
+            background: #1a5fb4;
+            border-color: #1a5fb4;
             color: white;
         }
 
         .btn-primary:hover {
             background: #0f4a8f;
-            transform: scale(1.02);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #cbd5e1;
-        }
-
-        .btn-outline:hover {
-            background: #f1f5f9;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-            border: 1px solid #dc2626;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #b91c1c;
-        }
-
-        .btn-success {
-            background: #16a34a;
-            border: 1px solid #16a34a;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #15803d;
         }
 
         .btn-purple {
             background: #7c3aed;
-            border: 1px solid #7c3aed;
+            border-color: #7c3aed;
             color: white;
         }
 
@@ -126,35 +102,91 @@
             background: #6d28d9;
         }
 
+        .btn-success {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: #cbd5e1;
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-sm {
+            background: transparent;
+            border: none;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .btn-sm:hover {
+            background: #e9edf2;
+        }
+
+        .btn-sm-success { color: #0b6e4f; }
+        .btn-sm-danger { color: #a12b2b; }
+
+        /* ===== FILTROS ===== */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem 1rem;
+            gap: 0.4rem;
             background: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 60px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            border: 1px solid #e9edf2;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             align-items: center;
         }
 
         .filter-bar span {
-            font-weight: 500;
+            font-weight: 600;
             color: #475569;
-            margin-right: 0.25rem;
+            margin-right: 0.5rem;
+            font-size: 0.85rem;
         }
 
         .filter-btn {
             background: transparent;
             border: none;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.85rem;
+            padding: 0.3rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
             font-weight: 500;
-            color: #334155;
+            color: #64748b;
             cursor: pointer;
             transition: 0.15s;
+        }
+
+        .filter-btn:hover {
+            background: #f1f5f9;
         }
 
         .filter-btn.active {
@@ -162,42 +194,40 @@
             color: #0f172a;
         }
 
-        .filter-btn:hover {
-            background: #e9edf2;
-        }
-
         .filter-btn i {
-            margin-right: 6px;
+            margin-right: 5px;
         }
 
+        /* ===== BOARD ===== */
         .board {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
         .column {
             background: white;
-            border-radius: 24px;
-            padding: 1.2rem 1rem 1.5rem;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
-            border: 1px solid #eef2f6;
-            transition: 0.2s;
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
+            min-height: 300px;
         }
 
         .column-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.2rem;
-            padding: 0 0.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #f1f5f9;
         }
 
         .column-header h3 {
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: #1e293b;
             display: flex;
             align-items: center;
@@ -205,205 +235,192 @@
         }
 
         .column-header .count {
-            background: #eef2f6;
-            padding: 0.1rem 0.7rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            background: #f1f5f9;
+            padding: 0.1rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
             font-weight: 600;
-            color: #475569;
+            color: #64748b;
         }
 
         .task-list {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 0.6rem;
             flex: 1;
         }
 
+        /* ===== TASK CARD ===== */
         .task-card {
             background: #fafcff;
-            border-radius: 18px;
-            padding: 1rem 1rem 0.9rem;
+            border-radius: 12px;
+            padding: 0.8rem 0.9rem;
             border: 1px solid #eef2f6;
             transition: 0.15s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .task-card:hover {
             border-color: #cbd5e1;
             background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        .task-title {
-            font-weight: 600;
-            color: #0f172a;
+        .task-card .top-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 0.5rem;
-            flex-wrap: wrap;
         }
 
-        .task-title span {
+        .task-card .title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #0f172a;
             word-break: break-word;
+            flex: 1;
         }
 
-        .task-meta {
+        .task-card .badges {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+
+        .task-card .desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+            padding-left: 0.2rem;
+        }
+
+        .task-card .meta {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 0.5rem 0.8rem;
-            margin-top: 0.6rem;
-            font-size: 0.8rem;
-            color: #475569;
+            gap: 0.4rem 0.8rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #94a3b8;
         }
 
-        .task-meta i {
-            margin-right: 4px;
+        .task-card .meta i {
+            margin-right: 3px;
             width: 14px;
-            color: #64748b;
         }
 
+        .task-card .actions {
+            display: flex;
+            gap: 0.2rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+
+        /* ===== BADGES ===== */
         .badge {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 0.15rem 0.6rem;
-            border-radius: 40px;
-            text-transform: capitalize;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
-        .badge-priority-alta {
-            background: #fee2e2;
-            color: #b91c1c;
+        .badge-priority-alta { background: #fee2e2; color: #b91c1c; }
+        .badge-priority-media { background: #fef9c3; color: #854d0e; }
+        .badge-priority-baixa { background: #dcfce7; color: #166534; }
+
+        .badge-responsavel {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
         }
 
-        .badge-priority-media {
-            background: #fef9c3;
-            color: #854d0e;
-        }
-
-        .badge-priority-baixa {
-            background: #dcfce7;
-            color: #166534;
-        }
+        .badge-responsavel.ambos { background: #fae8ff; color: #7c3aed; }
+        .badge-responsavel.cecilia { background: #fce7f3; color: #be185d; }
+        .badge-responsavel.beatriz { background: #dbeafe; color: #1e40af; }
 
         .badge-repeat {
             background: #e0e7ff;
             color: #3730a3;
-        }
-
-        /* Badge responsável */
-        .badge-responsavel {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
-            padding: 0.1rem 0.6rem;
-            border-radius: 40px;
-            display: inline-block;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
         }
 
-        .badge-responsavel.ambos {
-            background: #fae8ff;
-            color: #7c3aed;
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            color: #94a3b8;
+            padding: 2rem 0.5rem;
+            font-size: 0.85rem;
         }
 
-        .badge-responsavel.cecilia {
-            background: #fce7f3;
-            color: #be185d;
+        .empty-state i {
+            font-size: 2rem;
+            opacity: 0.4;
+            margin-bottom: 0.3rem;
+            display: block;
         }
 
-        .badge-responsavel.beatriz {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-
-        .task-actions {
-            margin-top: 0.8rem;
-            display: flex;
-            gap: 0.4rem;
-            flex-wrap: wrap;
-            border-top: 1px solid #edf2f6;
-            padding-top: 0.7rem;
-        }
-
-        .task-actions .btn-sm {
-            background: transparent;
-            border: none;
-            padding: 0.2rem 0.5rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: #334155;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .task-actions .btn-sm:hover {
-            background: #e9edf2;
-        }
-
-        .task-actions .btn-sm i {
-            font-size: 0.7rem;
-        }
-
-        .btn-sm-success { color: #0b6e4f; }
-        .btn-sm-danger { color: #a12b2b; }
-
+        /* ===== MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 999;
             padding: 1rem;
         }
 
-        .modal-overlay.open {
-            display: flex;
-        }
+        .modal-overlay.open { display: flex; }
 
         .modal {
             background: white;
-            border-radius: 32px;
-            max-width: 500px;
+            border-radius: 20px;
+            max-width: 520px;
             width: 100%;
-            padding: 2rem 1.8rem 1.8rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 1.8rem 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             animation: fadeUp 0.25s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(20px); }
+            0% { opacity: 0; transform: translateY(16px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         .modal h2 {
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #0f172a;
+            margin-bottom: 1.2rem;
         }
 
         .modal label {
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #1e293b;
             display: block;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             margin-bottom: 0.2rem;
         }
 
         .modal input, .modal select, .modal textarea {
             width: 100%;
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 0.9rem;
             border: 1px solid #d1d9e6;
-            border-radius: 40px;
-            font-size: 0.95rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
             background: white;
             transition: 0.15s;
         }
@@ -414,119 +431,205 @@
         }
 
         .modal textarea {
-            border-radius: 20px;
+            border-radius: 10px;
             resize: vertical;
-            min-height: 70px;
+            min-height: 60px;
         }
 
         .modal .row-2 {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
         }
 
         .modal .row-2 > * {
             flex: 1;
-            min-width: 120px;
+            min-width: 100px;
         }
 
         .modal-actions {
             display: flex;
             justify-content: flex-end;
-            gap: 0.8rem;
-            margin-top: 2rem;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
         }
 
         .btn-secondary {
-            background: #eef2f6;
+            background: #f1f5f9;
             border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            border-radius: 10px;
             font-weight: 500;
             cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-secondary:hover {
             background: #e2e8f0;
         }
 
-        .empty-state {
-            text-align: center;
-            color: #94a3b8;
-            padding: 1.5rem 0.5rem;
-            font-size: 0.9rem;
+        /* ===== MODAL RELATÓRIO ===== */
+        .modal-report .modal { max-width: 700px; }
+        .modal-report textarea {
+            min-height: 350px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            background: #f8fafc;
+            resize: vertical;
         }
 
-        .empty-state i {
-            font-size: 2rem;
-            opacity: 0.5;
-            margin-bottom: 0.3rem;
+        .report-actions {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
         }
 
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
             background: #0f172a;
             color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 60px;
-            font-size: 0.9rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            padding: 0.7rem 1.3rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             display: none;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             z-index: 1000;
             animation: fadeUp 0.3s ease;
         }
 
-        .toast.show {
-            display: flex;
-        }
+        .toast.show { display: flex; }
 
-        /* Modal do relatório */
-        .modal-report .modal {
-            max-width: 700px;
-        }
-
-        .modal-report textarea {
-            min-height: 400px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+        /* ===== HISTÓRICO ===== */
+        .historico-section {
+            background: white;
             border-radius: 16px;
-            padding: 1rem;
+            padding: 1rem 1.2rem;
+            margin-top: 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        .report-actions {
+        .historico-header {
             display: flex;
-            gap: 0.8rem;
-            margin-top: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.3rem 0;
+            user-select: none;
+        }
+
+        .historico-header h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .historico-header h3 i {
+            color: #94a3b8;
+        }
+
+        .historico-header .toggle-icon {
+            color: #94a3b8;
+            transition: transform 0.3s;
+        }
+
+        .historico-header .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
+        .historico-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 0.2rem;
+        }
+
+        .historico-content.open {
+            max-height: 800px;
+            padding: 0.8rem 0.2rem 0.2rem;
+        }
+
+        .historico-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.85rem;
+        }
+
+        .historico-item:last-child { border-bottom: none; }
+
+        .historico-item .h-title {
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
-        @media (max-width: 640px) {
-            .header h1 { font-size: 1.6rem; }
-            .filter-bar { border-radius: 30px; padding: 0.5rem 1rem; }
+        .historico-item .h-title .badge {
+            font-size: 0.55rem;
+        }
+
+        .historico-item .h-data {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .historico-vazio {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .header { padding: 0.8rem 1rem; }
+            .header h1 { font-size: 1.3rem; }
+            .board { grid-template-columns: 1fr; }
             .modal { padding: 1.5rem; }
             .toast { bottom: 1rem; right: 1rem; left: 1rem; }
-            .modal-report textarea { min-height: 300px; }
+            .filter-bar { border-radius: 10px; padding: 0.5rem 0.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .header-actions .btn { font-size: 0.75rem; padding: 0.4rem 0.7rem; }
+            .filter-btn { font-size: 0.7rem; padding: 0.2rem 0.6rem; }
+            .task-card { padding: 0.6rem; }
         }
     </style>
 </head>
 <body>
-<div class="app" id="app">
+<div class="app">
 
+    <!-- ===== HEADER ===== -->
     <div class="header">
-        <h1><i class="fas fa-clipboard-list"></i>Checklist</h1>
+        <h1><i class="fas fa-check-double"></i>Checklist</h1>
         <div class="header-actions">
-            <button class="btn btn-purple" id="reportBtn"><i class="fas fa-file-alt"></i>Relatório do dia</button>
-            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i>Restaurar</button>
-            <button class="btn btn-danger" id="clearBtn"><i class="fas fa-trash-alt"></i>Limpar</button>
-            <button class="btn btn-primary" id="newTaskBtn"><i class="fas fa-plus-circle"></i>Nova</button>
+            <button class="btn btn-purple" id="reportBtn"><i class="fas fa-file-alt"></i>Relatório</button>
+            <button class="btn btn-outline" id="resetBtn"><i class="fas fa-undo-alt"></i>Exemplo</button>
+            <button class="btn btn-success" id="clearHistoricoBtn"><i class="fas fa-trash-alt"></i>Limpar Histórico</button>
+            <button class="btn btn-primary" id="newTaskBtn"><i class="fas fa-plus"></i>Nova</button>
         </div>
     </div>
 
+    <!-- ===== FILTROS ===== -->
     <div class="filter-bar" id="filterBar">
         <span><i class="fas fa-filter"></i> Filtro:</span>
         <button class="filter-btn active" data-filter="all"><i class="fas fa-th-list"></i>Todas</button>
@@ -535,17 +638,29 @@
         <button class="filter-btn" data-filter="concluído"><i class="fas fa-check-circle"></i>Concluído</button>
     </div>
 
+    <!-- ===== BOARD ===== -->
     <div class="board" id="board"></div>
 
-    <!-- Modal Nova/Editar Tarefa -->
+    <!-- ===== HISTÓRICO ===== -->
+    <div class="historico-section" id="historicoSection">
+        <div class="historico-header" id="historicoToggle">
+            <h3><i class="fas fa-history"></i> Histórico de Concluídas</h3>
+            <span class="toggle-icon" id="historicoIcon"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="historico-content" id="historicoContent">
+            <div id="historicoList"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL TAREFA ===== -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
-            <h2 id="modalTitle"><i class="fas fa-pen"></i> Nova tarefa</h2>
+            <h2 id="modalTitle"><i class="fas fa-plus"></i> Nova tarefa</h2>
             <form id="taskForm">
                 <label>Título *</label>
                 <input type="text" id="taskTitle" placeholder="Ex: Revisar relatório" required>
 
-                <label>Descrição (opcional)</label>
+                <label>Descrição</label>
                 <textarea id="taskDesc" placeholder="Detalhes..."></textarea>
 
                 <div class="row-2">
@@ -583,31 +698,29 @@
                     </div>
                 </div>
 
-                <div class="row-2">
-                    <div>
-                        <label><i class="fas fa-user"></i> Responsável</label>
-                        <select id="taskResponsavel">
-                            <option value="ambos">Ambos</option>
-                            <option value="cecilia">Cecília</option>
-                            <option value="beatriz">Beatriz</option>
-                        </select>
-                    </div>
+                <div>
+                    <label><i class="fas fa-user"></i> Responsável</label>
+                    <select id="taskResponsavel">
+                        <option value="ambos">Ambos</option>
+                        <option value="cecilia">Cecília</option>
+                        <option value="beatriz">Beatriz</option>
+                    </select>
                 </div>
 
                 <div class="modal-actions">
                     <button type="button" class="btn-secondary" id="closeModalBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" id="saveTaskBtn"><i class="fas fa-save"></i> Salvar</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar</button>
                 </div>
                 <input type="hidden" id="editId" value="">
             </form>
         </div>
     </div>
 
-    <!-- Modal Relatório -->
+    <!-- ===== MODAL RELATÓRIO ===== -->
     <div class="modal-overlay modal-report" id="reportModal">
         <div class="modal">
             <h2><i class="fas fa-file-alt"></i> Relatório do Dia</h2>
-            <label>Copie o texto abaixo para usar no seu relatório:</label>
+            <label>Copie o texto abaixo:</label>
             <textarea id="reportText" readonly></textarea>
             <div class="report-actions">
                 <button class="btn btn-secondary" id="closeReportBtn">Fechar</button>
@@ -616,6 +729,7 @@
         </div>
     </div>
 
+    <!-- ===== TOAST ===== -->
     <div class="toast" id="toast">
         <i class="fas fa-check-circle" style="color: #4ade80;"></i>
         <span id="toastMessage">Tarefa salva!</span>
@@ -624,58 +738,69 @@
 
 <script>
     (function() {
-        // ----- CHAVE DO localStorage -----
+        // ----- CONSTANTES -----
         const STORAGE_KEY = 'checklist_tarefas';
+        const HISTORICO_KEY = 'checklist_historico';
 
-        // ----- CARREGAR TAREFAS DO localStorage -----
+        // ----- CARREGAR DADOS -----
         function loadTasks() {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                try {
-                    return JSON.parse(stored);
-                } catch (e) {
-                    return [];
-                }
+                try { return JSON.parse(stored); } catch (e) { return []; }
             }
             return null;
         }
 
-        // ----- SALVAR TAREFAS NO localStorage -----
+        function loadHistorico() {
+            const stored = localStorage.getItem(HISTORICO_KEY);
+            if (stored) {
+                try { return JSON.parse(stored); } catch (e) { return []; }
+            }
+            return [];
+        }
+
         function saveTasks(tasks) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
         }
 
-        // ----- DADOS INICIAIS (exemplo) -----
+        function saveHistorico(historico) {
+            localStorage.setItem(HISTORICO_KEY, JSON.stringify(historico));
+        }
+
+        // ----- DADOS INICIAIS -----
         function getDefaultTasks() {
             return [
-                { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não', responsavel: 'ambos' },
-                { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-08', priority: 'media', status: 'concluído', repeat: 'não', responsavel: 'cecilia' },
-                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-08', priority: 'baixa', status: 'concluído', repeat: 'não', responsavel: 'beatriz' },
-                { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
-                { id: 5, title: 'Perguntar p/ Guilherme se a NF da Reiller foi enviada', description: '', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
-                { id: 6, title: 'Verificar com Guilherme o pagamento feito para ALUMNI 05/06', description: '(2103-1)', date: '2026-07-09', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
-                { id: 7, title: 'Entregar os processos consultados p/ Guilherme', description: '', date: '2026-07-09', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
-                { id: 8, title: 'Verificar se as notas antigas estão lançadas', description: 'tirar dúvida com Livia. Já estão separados', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
-                { id: 9, title: 'Quando TUDO for conciliado, fazer as guias de reembolso', description: 'das receitas do periodo', date: '2026-07-10', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
-                { id: 10, title: 'Falta lançar algumas NFS', description: '', date: '2026-07-10', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
-                { id: 11, title: 'Fazer reembolso p/ Fellipe', description: '', date: '2026-07-10', priority: 'baixa', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
+                { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-14', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
+                { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-14', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
+                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-14', priority: 'baixa', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
+                { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
+                { id: 5, title: 'Perguntar p/ Guilherme sobre NF da Reiller', description: '', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
+                { id: 6, title: 'Verificar pagamento ALUMNI 05/06', description: '(2103-1) com Guilherme', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
             ];
         }
 
-        // ----- INICIALIZAR TAREFAS -----
+        // ----- INICIALIZAR -----
         let tasks = [];
+        let historico = [];
         let nextId = 1;
         let filter = 'all';
+        let historicoAberto = false;
 
-        const saved = loadTasks();
-        if (saved && saved.length > 0) {
-            tasks = saved;
+        const savedTasks = loadTasks();
+        const savedHistorico = loadHistorico();
+
+        if (savedTasks && savedTasks.length > 0) {
+            tasks = savedTasks;
             const maxId = tasks.reduce((max, t) => Math.max(max, t.id || 0), 0);
             nextId = maxId + 1;
         } else {
             tasks = getDefaultTasks();
-            nextId = 12;
+            nextId = 7;
             saveTasks(tasks);
+        }
+
+        if (savedHistorico && savedHistorico.length > 0) {
+            historico = savedHistorico;
         }
 
         // ----- REFERÊNCIAS DOM -----
@@ -695,7 +820,7 @@
         const newTaskBtn = document.getElementById('newTaskBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const resetBtn = document.getElementById('resetBtn');
-        const clearBtn = document.getElementById('clearBtn');
+        const clearHistoricoBtn = document.getElementById('clearHistoricoBtn');
         const reportBtn = document.getElementById('reportBtn');
         const reportModal = document.getElementById('reportModal');
         const reportText = document.getElementById('reportText');
@@ -703,6 +828,10 @@
         const copyReportBtn = document.getElementById('copyReportBtn');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
+        const historicoToggle = document.getElementById('historicoToggle');
+        const historicoContent = document.getElementById('historicoContent');
+        const historicoIcon = document.getElementById('historicoIcon');
+        const historicoList = document.getElementById('historicoList');
 
         let toastTimeout = null;
 
@@ -721,63 +850,64 @@
             return `${ano}-${mes}-${dia}`;
         }
 
-        function getPriorityBadge(priority) {
-            const map = {
-                'alta': 'badge-priority-alta',
-                'media': 'badge-priority-media',
-                'baixa': 'badge-priority-baixa'
-            };
-            return map[priority] || 'badge-priority-media';
+        function getPriorityLabel(p) {
+            const map = { 'alta': 'Alta', 'media': 'Média', 'baixa': 'Baixa' };
+            return map[p] || p;
         }
 
-        function getRepeatLabel(repeat) {
-            if (repeat === 'não' || !repeat) return '';
-            return repeat.charAt(0).toUpperCase() + repeat.slice(1);
+        function getPriorityClass(p) {
+            return `badge-priority-${p}`;
         }
 
-        function getResponsavelLabel(responsavel) {
-            const map = {
-                'ambos': 'Ambos',
-                'cecilia': 'Cecília',
-                'beatriz': 'Beatriz'
-            };
-            return map[responsavel] || responsavel;
+        function getResponsavelLabel(r) {
+            const map = { 'ambos': 'Ambos', 'cecilia': 'Cecília', 'beatriz': 'Beatriz' };
+            return map[r] || r;
         }
 
-        function getResponsavelClass(responsavel) {
-            return `badge-responsavel ${responsavel}`;
+        function getResponsavelClass(r) {
+            return `badge-responsavel ${r}`;
         }
 
-        function showToast(message) {
-            toastMessage.textContent = message;
+        function getRepeatLabel(r) {
+            if (r === 'não' || !r) return '';
+            return r.charAt(0).toUpperCase() + r.slice(1);
+        }
+
+        function showToast(msg) {
+            toastMessage.textContent = msg;
             toast.classList.add('show');
             if (toastTimeout) clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ----- RESETAR TAREFAS CONCLUÍDAS DIARIAMENTE -----
-        function resetDailyTasks() {
+        // ----- MOVER CONCLUÍDAS PARA HISTÓRICO -----
+        function moverConcluidasParaHistorico() {
             const hojeStr = getTodayStr();
             const ultimaExecucao = localStorage.getItem('ultima_execucao_reset');
-            
-            // Se nunca executou ou se a data mudou
+
             if (!ultimaExecucao || ultimaExecucao !== hojeStr) {
-                // Pega todas as tarefas concluídas
                 const concluidas = tasks.filter(t => t.status === 'concluído');
-                
-                // Muda para pendente (mantém a data original)
-                concluidas.forEach(t => {
-                    t.status = 'pendente';
-                });
-                
-                // Salva e atualiza
+
                 if (concluidas.length > 0) {
+                    // Adicionar ao histórico com data de conclusão
+                    concluidas.forEach(t => {
+                        historico.push({
+                            ...t,
+                            concluido_em: hojeStr,
+                            status: 'concluído'
+                        });
+                    });
+
+                    // Remover das tarefas ativas
+                    tasks = tasks.filter(t => t.status !== 'concluído');
+
                     saveTasks(tasks);
+                    saveHistorico(historico);
                     localStorage.setItem('ultima_execucao_reset', hojeStr);
+
                     render();
-                    showToast(`🔄 ${concluidas.length} tarefa(s) concluída(s) voltaram para pendente`);
+                    renderHistorico();
+                    showToast(`📦 ${concluidas.length} tarefa(s) movida(s) para o histórico`);
                 } else {
                     localStorage.setItem('ultima_execucao_reset', hojeStr);
                 }
@@ -790,31 +920,18 @@
             const dataFormatada = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const hojeStr = getTodayStr();
 
-            // Tarefas concluídas hoje
-            const concluidasHoje = tasks.filter(t => 
-                t.status === 'concluído' && t.date === hojeStr
-            );
+            const concluidasHoje = tasks.filter(t => t.status === 'concluído' && t.date === hojeStr);
+            const pendentes = tasks.filter(t => t.status === 'pendente' || t.status === 'em progresso');
 
-            // Tarefas pendentes (incluindo em progresso)
-            const pendentes = tasks.filter(t => 
-                t.status === 'pendente' || t.status === 'em progresso'
-            );
-
-            // Ordenar pendentes por prioridade (alta > media > baixa)
             const priorityWeight = { 'alta': 3, 'media': 2, 'baixa': 1 };
-            pendentes.sort((a, b) => 
-                (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0)
-            );
+            pendentes.sort((a, b) => (priorityWeight[b.priority] || 0) - (priorityWeight[a.priority] || 0));
 
             let relatorio = `*${dataFormatada}*\n\n`;
 
-            // Seções de concluídas
             if (concluidasHoje.length > 0) {
                 concluidasHoje.forEach(t => {
                     let linha = `º ${t.title}`;
-                    if (t.description) {
-                        linha += ` ${t.description}`;
-                    }
+                    if (t.description) linha += ` ${t.description}`;
                     if (t.responsavel && t.responsavel !== 'ambos') {
                         linha += ` (${getResponsavelLabel(t.responsavel)})`;
                     }
@@ -829,9 +946,7 @@
             if (pendentes.length > 0) {
                 pendentes.forEach(t => {
                     let linha = `º ${t.title}`;
-                    if (t.description) {
-                        linha += ` (${t.description})`;
-                    }
+                    if (t.description) linha += ` (${t.description})`;
                     if (t.responsavel && t.responsavel !== 'ambos') {
                         linha += ` - ${getResponsavelLabel(t.responsavel)}`;
                     }
@@ -844,11 +959,42 @@
             return relatorio;
         }
 
-        // ----- ABRIR RELATÓRIO -----
         function openReport() {
-            const relatorio = generateReport();
-            reportText.value = relatorio;
+            reportText.value = generateReport();
             reportModal.classList.add('open');
+        }
+
+        // ----- RENDERIZAR HISTÓRICO -----
+        function renderHistorico() {
+            if (historico.length === 0) {
+                historicoList.innerHTML = `<div class="historico-vazio"><i class="fas fa-inbox"></i> Nenhuma tarefa no histórico</div>`;
+                return;
+            }
+
+            // Ordenar por data de conclusão (mais recente primeiro)
+            const sorted = [...historico].sort((a, b) => {
+                if (a.concluido_em && b.concluido_em) {
+                    return new Date(b.concluido_em) - new Date(a.concluido_em);
+                }
+                return 0;
+            });
+
+            let html = '';
+            sorted.forEach(t => {
+                const dataConclusao = t.concluido_em ? formatDate(t.concluido_em) : 'Data desconhecida';
+                html += `
+                    <div class="historico-item">
+                        <div class="h-title">
+                            <span>${t.title}</span>
+                            <span class="badge ${getPriorityClass(t.priority)}">${getPriorityLabel(t.priority)}</span>
+                            <span class="${getResponsavelClass(t.responsavel || 'ambos')}">${getResponsavelLabel(t.responsavel || 'ambos')}</span>
+                        </div>
+                        <span class="h-data"><i class="far fa-calendar-alt"></i> ${dataConclusao}</span>
+                    </div>
+                `;
+            });
+
+            historicoList.innerHTML = html;
         }
 
         // ----- RENDERIZAR BOARD -----
@@ -883,35 +1029,41 @@
             for (const [statusKey, tasksList] of Object.entries(groups)) {
                 const info = statusLabels[statusKey] || { icon: 'fa-circle', label: statusKey };
                 const count = tasksList.length;
-                html += `<div class="column" data-status="${statusKey}">
-                    <div class="column-header">
-                        <h3><i class="fas ${info.icon}" style="color:${info.color}"></i> ${info.label}</h3>
-                        <span class="count">${count}</span>
-                    </div>
-                    <div class="task-list">`;
+
+                html += `
+                    <div class="column">
+                        <div class="column-header">
+                            <h3><i class="fas ${info.icon}" style="color:${info.color}"></i> ${info.label}</h3>
+                            <span class="count">${count}</span>
+                        </div>
+                        <div class="task-list">
+                `;
 
                 if (count === 0) {
-                    html += `<div class="empty-state"><i class="fas fa-inbox"></i><br>Nenhuma tarefa</div>`;
+                    html += `<div class="empty-state"><i class="fas fa-inbox"></i>Nenhuma tarefa</div>`;
                 } else {
                     tasksList.forEach(task => {
                         const repeatLabel = getRepeatLabel(task.repeat);
                         const responsavelLabel = getResponsavelLabel(task.responsavel || 'ambos');
                         const responsavelClass = getResponsavelClass(task.responsavel || 'ambos');
+                        const priorityClass = getPriorityClass(task.priority);
+                        const priorityLabel = getPriorityLabel(task.priority);
+
                         html += `
                             <div class="task-card" data-id="${task.id}">
-                                <div class="task-title">
-                                    <span>${task.title}</span>
-                                    <div style="display:flex; gap:0.3rem; flex-wrap:wrap;">
-                                        <span class="badge ${getPriorityBadge(task.priority)}">${task.priority}</span>
+                                <div class="top-row">
+                                    <span class="title">${task.title}</span>
+                                    <div class="badges">
+                                        <span class="badge ${priorityClass}">${priorityLabel}</span>
                                         <span class="${responsavelClass}">${responsavelLabel}</span>
                                     </div>
                                 </div>
-                                ${task.description ? `<div style="font-size:0.8rem;color:#475569;margin-top:4px;">${task.description}</div>` : ''}
-                                <div class="task-meta">
+                                ${task.description ? `<div class="desc">${task.description}</div>` : ''}
+                                <div class="meta">
                                     <span><i class="far fa-calendar-alt"></i> ${formatDate(task.date)}</span>
                                     ${repeatLabel ? `<span><i class="fas fa-sync-alt"></i> ${repeatLabel}</span>` : ''}
                                 </div>
-                                <div class="task-actions">
+                                <div class="actions">
                                     <button class="btn-sm btn-sm-success" data-action="progress" data-id="${task.id}"><i class="fas fa-arrow-right"></i> Progresso</button>
                                     <button class="btn-sm btn-sm-success" data-action="done" data-id="${task.id}"><i class="fas fa-check"></i> Concluir</button>
                                     <button class="btn-sm" data-action="edit" data-id="${task.id}"><i class="fas fa-pen"></i> Editar</button>
@@ -933,7 +1085,7 @@
             });
         }
 
-        // ----- CRUD COM SALVAMENTO AUTOMÁTICO -----
+        // ----- CRUD -----
         function addTask(task) {
             task.id = nextId++;
             tasks.push(task);
@@ -965,37 +1117,38 @@
                 task.status = newStatus;
                 saveTasks(tasks);
                 render();
-                showToast(`📌 Status alterado para: ${newStatus}`);
+                showToast(`📌 Status: ${newStatus}`);
             }
         }
 
-        function clearAllTasks() {
-            if (tasks.length === 0) {
-                showToast('ℹ️ Já está vazio');
+        function clearHistorico() {
+            if (historico.length === 0) {
+                showToast('ℹ️ Histórico já está vazio');
                 return;
             }
-            if (confirm('⚠️ Tem certeza que deseja excluir TODAS as tarefas?')) {
-                tasks = [];
-                saveTasks(tasks);
-                render();
-                showToast('🧹 Todas as tarefas foram removidas');
+            if (confirm('⚠️ Tem certeza que deseja limpar TODO o histórico?')) {
+                historico = [];
+                saveHistorico(historico);
+                renderHistorico();
+                showToast('🧹 Histórico limpo');
             }
         }
 
         function resetToExample() {
-            if (tasks.length > 0) {
-                if (!confirm('⚠️ Isso substituirá todas as tarefas atuais pelos exemplos. Continuar?')) {
-                    return;
-                }
+            if (tasks.length > 0 || historico.length > 0) {
+                if (!confirm('⚠️ Isso substituirá todas as tarefas e limpará o histórico. Continuar?')) return;
             }
             tasks = getDefaultTasks();
-            nextId = 12;
+            historico = [];
+            nextId = 7;
             saveTasks(tasks);
+            saveHistorico(historico);
             render();
-            showToast('📋 Exemplos restaurados!');
+            renderHistorico();
+            showToast('📋 Exemplos restaurados');
         }
 
-        // ----- MODAL TAREFA -----
+        // ----- MODAL -----
         function openModal(taskData = null) {
             if (taskData) {
                 modalTitle.innerHTML = '<i class="fas fa-edit"></i> Editar tarefa';
@@ -1008,7 +1161,7 @@
                 taskResponsavel.value = taskData.responsavel || 'ambos';
                 editId.value = taskData.id || '';
             } else {
-                modalTitle.innerHTML = '<i class="fas fa-plus-circle"></i> Nova tarefa';
+                modalTitle.innerHTML = '<i class="fas fa-plus"></i> Nova tarefa';
                 taskTitle.value = '';
                 taskDesc.value = '';
                 taskDate.value = '';
@@ -1034,7 +1187,6 @@
         });
 
         newTaskBtn.addEventListener('click', () => openModal());
-
         closeModalBtn.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
@@ -1044,7 +1196,7 @@
             e.preventDefault();
             const title = taskTitle.value.trim();
             if (!title) {
-                showToast('⚠️ O título é obrigatório');
+                showToast('⚠️ Título obrigatório');
                 return;
             }
 
@@ -1091,11 +1243,9 @@
             }
         });
 
-        // ----- EVENTOS RELATÓRIO -----
+        // ----- RELATÓRIO -----
         reportBtn.addEventListener('click', openReport);
-        closeReportBtn.addEventListener('click', () => {
-            reportModal.classList.remove('open');
-        });
+        closeReportBtn.addEventListener('click', () => reportModal.classList.remove('open'));
         reportModal.addEventListener('click', (e) => {
             if (e.target === reportModal) reportModal.classList.remove('open');
         });
@@ -1103,20 +1253,32 @@
         copyReportBtn.addEventListener('click', () => {
             reportText.select();
             document.execCommand('copy');
-            showToast('📋 Relatório copiado!');
+            showToast('📋 Copiado!');
         });
 
+        // ----- HISTÓRICO TOGGLE -----
+        historicoToggle.addEventListener('click', () => {
+            historicoAberto = !historicoAberto;
+            historicoContent.classList.toggle('open', historicoAberto);
+            historicoIcon.classList.toggle('open', historicoAberto);
+        });
+
+        // ----- OUTROS BOTÕES -----
         resetBtn.addEventListener('click', resetToExample);
-        clearBtn.addEventListener('click', clearAllTasks);
+        clearHistoricoBtn.addEventListener('click', clearHistorico);
 
         // ----- INICIALIZAR -----
-        // Executar reset diário ao carregar
-        resetDailyTasks();
-        
-        // Renderizar
+        moverConcluidasParaHistorico();
         render();
+        renderHistorico();
 
-        // Mostrar mensagem de boas-vindas
+        // Abrir histórico se tiver itens
+        if (historico.length > 0) {
+            historicoAberto = true;
+            historicoContent.classList.add('open');
+            historicoIcon.classList.add('open');
+        }
+
         setTimeout(() => {
             const count = tasks.length;
             showToast(`📋 ${count} tarefa${count !== 1 ? 's' : ''} carregada${count !== 1 ? 's' : ''}`);
