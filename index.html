@@ -352,6 +352,15 @@
             border-radius: 20px;
         }
 
+        .badge-recriada {
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 0.1rem 0.4rem;
+            border-radius: 20px;
+        }
+
         /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
@@ -772,7 +781,7 @@
             return [
                 { id: 1, title: 'Recibo da RGOMES lançado', description: 'Colocado na fatura INTER', date: '2026-07-14', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
                 { id: 2, title: 'NF lançadas', description: 'Todas as notas fiscais do dia', date: '2026-07-14', priority: 'media', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
-                { id: 3, title: 'Reembolsos para Filipe feitos', description: 'Valores aprovados', date: '2026-07-14', priority: 'baixa', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
+                { id: 3, title: 'Backup semanal', description: 'Arquivos do servidor', date: '2026-07-14', priority: 'baixa', status: 'pendente', repeat: 'semanalmente', responsavel: 'beatriz' },
                 { id: 4, title: 'CONFERIR TODOS OS IMPOSTOS LANÇADOS', description: 'com Livia', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'ambos' },
                 { id: 5, title: 'Perguntar p/ Guilherme sobre NF da Reiller', description: '', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'cecilia' },
                 { id: 6, title: 'Verificar pagamento ALUMNI 05/06', description: '(2103-1) com Guilherme', date: '2026-07-15', priority: 'alta', status: 'pendente', repeat: 'não', responsavel: 'beatriz' },
@@ -880,7 +889,33 @@
             toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // ----- MOVER CONCLUÍDAS PARA HISTÓRICO -----
+        // ----- CALCULAR PRÓXIMA DATA DE REPETIÇÃO -----
+        function calcularProximaData(dataAtual, repeticao) {
+            if (!dataAtual || repeticao === 'não') return null;
+            
+            const data = new Date(dataAtual + 'T00:00:00');
+            
+            switch(repeticao) {
+                case 'diariamente':
+                    data.setDate(data.getDate() + 1);
+                    break;
+                case 'semanalmente':
+                    data.setDate(data.getDate() + 7);
+                    break;
+                case 'mensalmente':
+                    data.setMonth(data.getMonth() + 1);
+                    break;
+                default:
+                    return null;
+            }
+            
+            const ano = data.getFullYear();
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
+            const dia = String(data.getDate()).padStart(2, '0');
+            return `${ano}-${mes}-${dia}`;
+        }
+
+        // ----- MOVER CONCLUÍDAS PARA HISTÓRICO E RECRIAR REPETITIVAS -----
         function moverConcluidasParaHistorico() {
             const hojeStr = getTodayStr();
             const ultimaExecucao = localStorage.getItem('ultima_execucao_reset');
@@ -889,16 +924,36 @@
                 const concluidas = tasks.filter(t => t.status === 'concluído');
 
                 if (concluidas.length > 0) {
-                    // Adicionar ao histórico com data de conclusão
+                    let recriadas = 0;
+                    
                     concluidas.forEach(t => {
+                        // Adicionar ao histórico
                         historico.push({
                             ...t,
                             concluido_em: hojeStr,
                             status: 'concluído'
                         });
+
+                        // Verificar se tem repetição
+                        if (t.repeat && t.repeat !== 'não') {
+                            // Calcular próxima data
+                            const proximaData = calcularProximaData(t.date, t.repeat);
+                            if (proximaData) {
+                                // Recriar a tarefa com a nova data
+                                const novaTarefa = {
+                                    ...t,
+                                    id: nextId++,
+                                    date: proximaData,
+                                    status: 'pendente',
+                                    recriada_em: hojeStr
+                                };
+                                tasks.push(novaTarefa);
+                                recriadas++;
+                            }
+                        }
                     });
 
-                    // Remover das tarefas ativas
+                    // Remover as concluídas das tarefas ativas
                     tasks = tasks.filter(t => t.status !== 'concluído');
 
                     saveTasks(tasks);
@@ -907,7 +962,12 @@
 
                     render();
                     renderHistorico();
-                    showToast(`📦 ${concluidas.length} tarefa(s) movida(s) para o histórico`);
+                    
+                    let msg = `📦 ${concluidas.length} tarefa(s) movida(s) para o histórico`;
+                    if (recriadas > 0) {
+                        msg += ` 🔄 ${recriadas} tarefa(s) repetitiva(s) recriada(s)`;
+                    }
+                    showToast(msg);
                 } else {
                     localStorage.setItem('ultima_execucao_reset', hojeStr);
                 }
@@ -950,6 +1010,9 @@
                     if (t.responsavel && t.responsavel !== 'ambos') {
                         linha += ` - ${getResponsavelLabel(t.responsavel)}`;
                     }
+                    if (t.repeat && t.repeat !== 'não') {
+                        linha += ` [Repete: ${getRepeatLabel(t.repeat)}]`;
+                    }
                     relatorio += linha + '\n';
                 });
             } else {
@@ -971,7 +1034,6 @@
                 return;
             }
 
-            // Ordenar por data de conclusão (mais recente primeiro)
             const sorted = [...historico].sort((a, b) => {
                 if (a.concluido_em && b.concluido_em) {
                     return new Date(b.concluido_em) - new Date(a.concluido_em);
@@ -982,12 +1044,14 @@
             let html = '';
             sorted.forEach(t => {
                 const dataConclusao = t.concluido_em ? formatDate(t.concluido_em) : 'Data desconhecida';
+                const repeatLabel = getRepeatLabel(t.repeat);
                 html += `
                     <div class="historico-item">
                         <div class="h-title">
                             <span>${t.title}</span>
                             <span class="badge ${getPriorityClass(t.priority)}">${getPriorityLabel(t.priority)}</span>
                             <span class="${getResponsavelClass(t.responsavel || 'ambos')}">${getResponsavelLabel(t.responsavel || 'ambos')}</span>
+                            ${repeatLabel ? `<span class="badge-repeat">🔄 ${repeatLabel}</span>` : ''}
                         </div>
                         <span class="h-data"><i class="far fa-calendar-alt"></i> ${dataConclusao}</span>
                     </div>
@@ -1056,12 +1120,14 @@
                                     <div class="badges">
                                         <span class="badge ${priorityClass}">${priorityLabel}</span>
                                         <span class="${responsavelClass}">${responsavelLabel}</span>
+                                        ${repeatLabel ? `<span class="badge-repeat">🔄 ${repeatLabel}</span>` : ''}
+                                        ${task.recriada_em ? `<span class="badge-recriada">♻️ Recriada</span>` : ''}
                                     </div>
                                 </div>
                                 ${task.description ? `<div class="desc">${task.description}</div>` : ''}
                                 <div class="meta">
                                     <span><i class="far fa-calendar-alt"></i> ${formatDate(task.date)}</span>
-                                    ${repeatLabel ? `<span><i class="fas fa-sync-alt"></i> ${repeatLabel}</span>` : ''}
+                                    ${task.recriada_em ? `<span><i class="fas fa-sync-alt"></i> Recriada em ${formatDate(task.recriada_em)}</span>` : ''}
                                 </div>
                                 <div class="actions">
                                     <button class="btn-sm btn-sm-success" data-action="progress" data-id="${task.id}"><i class="fas fa-arrow-right"></i> Progresso</button>
@@ -1272,7 +1338,6 @@
         render();
         renderHistorico();
 
-        // Abrir histórico se tiver itens
         if (historico.length > 0) {
             historicoAberto = true;
             historicoContent.classList.add('open');
