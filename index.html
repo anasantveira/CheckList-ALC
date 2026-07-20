@@ -169,7 +169,7 @@
         .filter-bar span {
             font-weight: 600;
             color: #475569;
-            margin-right: 0.5rem;
+            margin-right: 0.3rem;
             font-size: 0.85rem;
         }
 
@@ -196,6 +196,11 @@
 
         .filter-btn i {
             margin-right: 5px;
+        }
+
+        .filter-divider {
+            color: #e2e8f0;
+            margin: 0 0.2rem;
         }
 
         /* ===== BOARD ===== */
@@ -645,6 +650,12 @@
         <button class="filter-btn" data-filter="pendente"><i class="fas fa-clock"></i>Pendente</button>
         <button class="filter-btn" data-filter="em progresso"><i class="fas fa-spinner"></i>Em progresso</button>
         <button class="filter-btn" data-filter="concluído"><i class="fas fa-check-circle"></i>Concluído</button>
+        
+        <span style="margin-left: 0.8rem;"><i class="fas fa-user"></i> Responsável:</span>
+        <button class="filter-btn active" data-filter-responsavel="todos"><i class="fas fa-users"></i>Todos</button>
+        <button class="filter-btn" data-filter-responsavel="ambos"><i class="fas fa-user-friends"></i>Ambos</button>
+        <button class="filter-btn" data-filter-responsavel="cecilia"><i class="fas fa-user"></i>Cecília</button>
+        <button class="filter-btn" data-filter-responsavel="beatriz"><i class="fas fa-user"></i>Beatriz</button>
     </div>
 
     <!-- ===== BOARD ===== -->
@@ -793,6 +804,7 @@
         let historico = [];
         let nextId = 1;
         let filter = 'all';
+        let filterResponsavel = 'todos';
         let historicoAberto = false;
 
         const savedTasks = loadTasks();
@@ -1064,8 +1076,15 @@
         // ----- RENDERIZAR BOARD -----
         function render() {
             let filtered = tasks;
+            
+            // Filtro por status
             if (filter !== 'all') {
                 filtered = tasks.filter(t => t.status === filter);
+            }
+            
+            // Filtro por responsável
+            if (filterResponsavel !== 'todos') {
+                filtered = filtered.filter(t => t.responsavel === filterResponsavel);
             }
 
             const priorityWeight = { 'alta': 3, 'media': 2, 'baixa': 1 };
@@ -1145,9 +1164,16 @@
 
             board.innerHTML = html;
 
-            document.querySelectorAll('.filter-btn').forEach(btn => {
+            // Atualizar active dos filtros de status
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.filter === filter) btn.classList.add('active');
+            });
+            
+            // Atualizar active dos filtros de responsável
+            document.querySelectorAll('.filter-btn[data-filter-responsavel]').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filterResponsavel === filterResponsavel) btn.classList.add('active');
             });
         }
 
@@ -1245,11 +1271,24 @@
         }
 
         // ----- EVENTOS -----
+        // ----- EVENTO DE FILTRO -----
         filterBar.addEventListener('click', (e) => {
             const btn = e.target.closest('.filter-btn');
             if (!btn) return;
-            filter = btn.dataset.filter;
-            render();
+            
+            // Filtro por status
+            if (btn.dataset.filter) {
+                filter = btn.dataset.filter;
+                render();
+                return;
+            }
+            
+            // Filtro por responsável
+            if (btn.dataset.filterResponsavel) {
+                filterResponsavel = btn.dataset.filterResponsavel;
+                render();
+                return;
+            }
         });
 
         newTaskBtn.addEventListener('click', () => openModal());
